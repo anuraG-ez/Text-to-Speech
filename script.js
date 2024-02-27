@@ -1,7 +1,42 @@
+// selecting DOM elements
+const btnThemeSwitcher= document.querySelector('.btn-theme-switcher');
+const iconThemeSwitcher= document.querySelector('.theme-icon');
 let playBtn = document.querySelector("#ply-btn");
 let inputText = document.querySelector("#textInput");
 let userInput = inputText.value;
 
+
+// finding out user's theme preference
+let defaultTheme= 1;    // (0 => light, 1 => dark)
+let iconType;           // which other theme icon to load
+const darkThemeSupporter= window.matchMedia("(prefers-color-scheme: dark").matches; // checking if user has a dark theme preference
+
+if(darkThemeSupporter){
+    document.body.classList.add('dark');
+    iconType= "light";
+}
+else{
+    document.body.classList.add('light');
+    iconType= "dark";
+    defaultTheme= 0;
+} 
+iconThemeSwitcher.src= `./media/icons/${iconType}-mode.png`;
+
+
+// handling theme switching
+btnThemeSwitcher.addEventListener('click', ()=>{
+    if(defaultTheme){   // currently it is dark => need to switch to light
+        iconType= "dark";
+        defaultTheme= 0;
+    }
+    else{
+        iconType= "light";
+        defaultTheme= 1;
+    }
+    document.body.classList.toggle('light');
+    document.body.classList.toggle('dark');
+    iconThemeSwitcher.src= `./media/icons/${iconType}-mode.png`;
+});
 
 
 function speak(text,callback) {
